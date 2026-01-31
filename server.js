@@ -35,7 +35,7 @@ app.post('/api/enviar-ticket', async (req, res) => {
         const mailOptions = {
             from: {
                 name: 'NAVIX - Sistema de Tickets',
-                address: 'navixmexico@gmail.com'
+                address: process.env.EMAIL_USER
             },
             to: emailDestino,
             subject: `🎫 Ticket NAVIX - ${ticketData.cliente.nombre}`,
