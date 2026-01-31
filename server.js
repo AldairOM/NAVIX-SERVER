@@ -8,11 +8,16 @@ app.use(express.json({ limit: '10mb' }));
 
 //Se configura el gmail para el envío de emails
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-        }
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
 app.post('/api/enviar-ticket', async (req, res) => {
