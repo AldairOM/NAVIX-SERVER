@@ -9,13 +9,17 @@ app.use(express.json({ limit: '10mb' }));
 //Se configura el gmail para el envío de emails
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
-  port: 587,
+  port: 2525,
   secure: false,
   auth: {
     user: process.env.BREVO_USER,
     pass: process.env.BREVO_PASS
-  }
+  },
+  connectionTimeout: 20000,
+  greetingTimeout: 20000,
+  socketTimeout: 20000
 });
+
 
 app.post('/api/enviar-ticket', async (req, res) => {
     try {
