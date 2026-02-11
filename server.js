@@ -235,6 +235,16 @@ function generarHTMLTicket(data) {
                     💰TOTAL GENERAL: ${formatMXN(data.totalGeneral)}
                 </div>
 
+                <!-- Código de Ticket -->
+                <div style="background:#f0f0f0;padding:15px;border-radius:10px;border-left:4px solid #995E8E;text-align:center;margin-top:15px;">
+                    <div style="font-weight:bold;font-size:14px;color:#6b3570;margin-bottom:5px;">
+                        📋 CÓDIGO DE TICKET
+                    </div>
+                    <div style="font-size:20px;font-weight:bold;color:#995E8E;letter-spacing:3px;">
+                        ${data.codigoTicket}
+                    </div>
+                </div>
+
                 <!-- Footer -->
                 <div style="margin-top:30px;padding-top:15px;border-top:1px solid #e0e0e0;text-align:center;font-size:12px;color:#999;">
                     <p>Este es un ticket generado automáticamente por el sistema NAVIX</p>
