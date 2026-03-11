@@ -95,6 +95,79 @@ function crearAdjuntoInline(base64, filename, cid) {
 }
 
 //==============================
+// BLOQUES HTML REUTILIZABLES
+//==============================
+
+function generarTablaSeguimiento({ color, paso1Icono, paso1Texto, paso2Icono, paso2Texto, paso3Icono, paso3Texto, paso3Color = "#999", lineaColor = color, fondoPaso3 = color }) {
+    return `
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:30px 0;border-collapse:collapse;">
+            <tr>
+                <td colspan="3" style="padding:0 20px 14px 20px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                        <tr>
+                            <td style="height:4px;background:${lineaColor};font-size:0;line-height:0;">&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td align="center" valign="top" width="33.33%" style="padding:0 8px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                        <tr>
+                            <td align="center">
+                                <div style="width:36px;height:36px;line-height:36px;border-radius:50%;background:${color};color:#ffffff;font-weight:bold;font-size:20px;text-align:center;margin:0 auto;">
+                                    ${paso1Icono}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding-top:8px;font-size:13px;font-weight:bold;color:${color};white-space:nowrap;">
+                                ${paso1Texto}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td align="center" valign="top" width="33.33%" style="padding:0 8px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                        <tr>
+                            <td align="center">
+                                <div style="width:36px;height:36px;line-height:36px;border-radius:50%;background:${color};color:#ffffff;font-weight:bold;font-size:20px;text-align:center;margin:0 auto;">
+                                    ${paso2Icono}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding-top:8px;font-size:13px;font-weight:bold;color:${color};white-space:nowrap;">
+                                ${paso2Texto}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td align="center" valign="top" width="33.33%" style="padding:0 8px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                        <tr>
+                            <td align="center">
+                                <div style="width:36px;height:36px;line-height:36px;border-radius:50%;background:${fondoPaso3};color:#ffffff;font-weight:bold;font-size:20px;text-align:center;margin:0 auto;">
+                                    ${paso3Icono}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding-top:8px;font-size:13px;font-weight:bold;color:${paso3Color};white-space:nowrap;">
+                                ${paso3Texto}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    `;
+}
+
+//==============================
 // HTMLS
 //==============================
 
@@ -256,6 +329,19 @@ function generarHTMLTicket(data) {
 }
 
 function generarHTMLEnCamino(data) {
+    const barraSeguimiento = generarTablaSeguimiento({
+        color: "#4A90E2",
+        paso1Icono: "✓",
+        paso1Texto: "Confirmado",
+        paso2Icono: "📦",
+        paso2Texto: "En Camino",
+        paso3Icono: "○",
+        paso3Texto: "Entregado",
+        paso3Color: "#999",
+        lineaColor: "#4A90E2",
+        fondoPaso3: "#e0e0e0"
+    });
+
     return `
         <!DOCTYPE html>
         <html lang="es">
@@ -271,27 +357,7 @@ function generarHTMLEnCamino(data) {
                     📦 Su Pedido Está en Camino
                 </h2>
 
-                <div style="margin:30px 0;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;position:relative;">
-                        <div style="position:absolute;top:15px;left:0;right:0;height:4px;background:#e0e0e0;z-index:1;"></div>
-                        <div style="position:absolute;top:15px;left:0;width:50%;height:4px;background:#4A90E2;z-index:2;"></div>
-
-                        <div style="display:flex;flex-direction:column;align-items:center;z-index:3;background:white;padding:0 10px;">
-                            <div style="width:32px;height:32px;border-radius:50%;background:#4A90E2;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:18px;">✓</div>
-                            <div style="margin-top:8px;font-size:13px;font-weight:bold;color:#4A90E2;">Confirmado</div>
-                        </div>
-
-                        <div style="display:flex;flex-direction:column;align-items:center;z-index:3;background:white;padding:0 10px;">
-                            <div style="width:32px;height:32px;border-radius:50%;background:#4A90E2;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:18px;">📦</div>
-                            <div style="margin-top:8px;font-size:13px;font-weight:bold;color:#4A90E2;">En Camino</div>
-                        </div>
-
-                        <div style="display:flex;flex-direction:column;align-items:center;z-index:3;background:white;padding:0 10px;">
-                            <div style="width:32px;height:32px;border-radius:50%;background:#e0e0e0;display:flex;align-items:center;justify-content:center;color:#999;font-weight:bold;font-size:18px;">○</div>
-                            <div style="margin-top:8px;font-size:13px;color:#999;">Entregado</div>
-                        </div>
-                    </div>
-                </div>
+                ${barraSeguimiento}
 
                 <div style="background:#f0f8ff;padding:20px;border-radius:10px;border-left:4px solid #4A90E2;margin:25px 0;">
                     <p style="margin:0;font-size:16px;color:#333;line-height:1.6;">
@@ -333,6 +399,19 @@ function generarHTMLEnCamino(data) {
 }
 
 function generarHTMLEntregado(data, incluirFotoEntrega = false) {
+    const barraSeguimiento = generarTablaSeguimiento({
+        color: "#28a745",
+        paso1Icono: "✓",
+        paso1Texto: "Confirmado",
+        paso2Icono: "✓",
+        paso2Texto: "En Camino",
+        paso3Icono: "✓",
+        paso3Texto: "Entregado",
+        paso3Color: "#28a745",
+        lineaColor: "#28a745",
+        fondoPaso3: "#28a745"
+    });
+
     return `
         <!DOCTYPE html>
         <html lang="es">
@@ -356,26 +435,7 @@ function generarHTMLEntregado(data, incluirFotoEntrega = false) {
                 </div>
                 ` : ""}
 
-                <div style="margin:30px 0;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;position:relative;">
-                        <div style="position:absolute;top:15px;left:0;right:0;height:4px;background:#28a745;z-index:1;"></div>
-
-                        <div style="display:flex;flex-direction:column;align-items:center;z-index:3;background:white;padding:0 10px;">
-                            <div style="width:32px;height:32px;border-radius:50%;background:#28a745;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:18px;">✓</div>
-                            <div style="margin-top:8px;font-size:13px;font-weight:bold;color:#28a745;">Confirmado</div>
-                        </div>
-
-                        <div style="display:flex;flex-direction:column;align-items:center;z-index:3;background:white;padding:0 10px;">
-                            <div style="width:32px;height:32px;border-radius:50%;background:#28a745;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:18px;">✓</div>
-                            <div style="margin-top:8px;font-size:13px;font-weight:bold;color:#28a745;">En Camino</div>
-                        </div>
-
-                        <div style="display:flex;flex-direction:column;align-items:center;z-index:3;background:white;padding:0 10px;">
-                            <div style="width:32px;height:32px;border-radius:50%;background:#28a745;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:18px;">✓</div>
-                            <div style="margin-top:8px;font-size:13px;font-weight:bold;color:#28a745;">Entregado</div>
-                        </div>
-                    </div>
-                </div>
+                ${barraSeguimiento}
 
                 <div style="background:#f0fff4;padding:20px;border-radius:10px;border-left:4px solid #28a745;margin:25px 0;">
                     <p style="margin:0;font-size:16px;color:#333;line-height:1.6;">
